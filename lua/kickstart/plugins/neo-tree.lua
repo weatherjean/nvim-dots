@@ -13,6 +13,7 @@ return {
   keys = {
     { '<leader>e', ':Neotree toggle<CR>', desc = 'NeoTree toggle', silent = true },
     { '<leader>fe', ':Neotree reveal<CR>', desc = 'NeoTree reveal file', silent = true },
+    { '<leader>ee', ':Neotree git_status git_base=main<CR>', desc = 'NeoTree git status (vs main)', silent = true },
     {
       '<leader>fE',
       function()
