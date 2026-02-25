@@ -19,7 +19,13 @@ return {
       },
     },
   },
-
+  {
+    'esmuellert/codediff.nvim',
+    cmd = 'CodeDiff',
+  },
+  {
+    'nvim-pack/nvim-spectre',
+  },
   {
     'kdheepak/lazygit.nvim',
     dependencies = {
@@ -52,6 +58,41 @@ return {
       require('codeium').setup {
         enable_chat = true,
       }
+    end,
+  },
+
+  {
+    'zbirenbaum/copilot.lua',
+    cmd = 'Copilot',
+    build = ':Copilot auth',
+    event = 'BufReadPost',
+    opts = {
+      suggestion = {
+        enabled = false, -- Disable inline suggestions since cmp handles that
+        auto_trigger = true,
+        hide_during_completion = false, -- Show suggestions during cmp popup
+        keymap = {
+          accept = false, -- Accept handled via cmp mapping
+          next = '<M-]>',
+          prev = '<M-[>',
+        },
+      },
+      panel = { enabled = false }, -- Optional panel for showing suggestions
+      filetypes = {
+        markdown = true,
+        help = true,
+      },
+    },
+  },
+
+  {
+    'zbirenbaum/copilot-cmp',
+    event = 'BufReadPost',
+    dependencies = { 'zbirenbaum/copilot.lua', 'hrsh7th/nvim-cmp' },
+    config = function()
+      require('copilot').setup {}
+      require('copilot_cmp').setup {}
+      print 'Copilot and copilot_cmp loaded'
     end,
   },
 }
