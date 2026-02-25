@@ -5,6 +5,14 @@
 return {
   {
     'lewis6991/gitsigns.nvim',
+    config = function(_, opts)
+      -- Give deleted virtual lines a red background
+      vim.api.nvim_set_hl(0, 'GitSignsDeleteVirtLn', { bg = '#4b1818' })
+      vim.api.nvim_set_hl(0, 'GitSignsAddLn', { bg = '#1a4b1a' })
+      vim.api.nvim_set_hl(0, 'GitSignsChangeLn', { bg = '#4b4b1a' })
+
+      require('gitsigns').setup(opts)
+    end,
     opts = {
       on_attach = function(bufnr)
         local gitsigns = require 'gitsigns'
@@ -55,6 +63,11 @@ return {
         -- Toggles
         map('n', '<leader>tb', gitsigns.toggle_current_line_blame, { desc = '[T]oggle git show [b]lame line' })
         map('n', '<leader>tD', gitsigns.toggle_deleted, { desc = '[T]oggle git show [D]eleted' })
+        map('n', '<leader>tH', gitsigns.toggle_linehl, { desc = '[T]oggle git line [H]ighlights' })
+        map('n', '<leader>tg', function()
+          local enabled = gitsigns.toggle_deleted()
+          gitsigns.toggle_linehl(enabled)
+        end, { desc = '[T]oggle [g]it code review mode' })
       end,
     },
   },
